@@ -1,0 +1,12 @@
+close_covers:
+  alias: Close all covers
+  sequence:
+      # This is written using the Script Syntax
+    - service: cover.close_cover
+      entity_id: group.all_covers
+open_covers:
+  alias: Open all covers
+  sequence:
+      # This is written using the Script Syntax
+    - service: cover.open_cover
+      entity_id: group.all_covers

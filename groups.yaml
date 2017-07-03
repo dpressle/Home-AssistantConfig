@@ -1,0 +1,5 @@
+outside_lights:
+    name: Outside Lights
+    entities:
+      - switch.relaybutton_5_0
+      - switch.relaybutton_5_1

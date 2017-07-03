@@ -1,0 +1,25 @@
+- action:
+  - alias: Open all covers
+    data:
+      entity_id: group.all_covers
+      position: 70
+    service: cover.set_cover_position
+  alias: Morning open covers
+  id: '1499007345401'
+  trigger:
+  - event_data:
+      entity_id: sun.sun
+    event_type: sunrise
+    platform: event
+- action:
+  - data:
+      entity_id: group.outside_lights
+    service: switch.turn_on
+  alias: Turn on outside lights at dask
+  id: '1499110088157'
+  trigger:
+  - event_data:
+      entity_id: sun.sun
+      offset: 00:30:00
+    event_type: sunset
+    platform: event

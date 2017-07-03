@@ -1,0 +1,115 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret lat
+  longitude: !secret long
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 169
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Asia/Jerusalem
+
+# Show links to resources in log and frontend
+# introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  # api_password: PASSWORD
+  # Uncomment this if you are using SSL or running in Docker etc
+  # base_url: example.duckdns.org:8123
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+ios:
+
+# Text to speech
+tts:
+  platform: google
+
+mysensors:
+  gateways:
+    - device: '/dev/serial/by-id/usb-1a86_USB2.0-Serial-if00-port0'
+    # - device: '/dev/ttyUSB0'
+      persistence_file: '/home/homeassistant/.homeassistant/mysensors.json'
+      # baud_rate: 115200
+  debug: true
+  optimistic: false
+  persistence: true
+  # retain: true
+  version: 2.0
+
+mqtt:
+  broker: m20.cloudmqtt.com
+  port: 15512
+  client_id: home-assistant-1
+  keepalive: 60
+  username: dpressle
+  password: !secret mqtt_password
+
+device_tracker:
+  - platform: owntracks
+    max_gps_accuracy: 200
+
+notify:
+  # - name: PUSHBULLET
+    # platform: pushbullet
+    # api_key: !secret pushbullet_key
+  
+  - name: PUSHETTA
+    platform: pushetta
+    api_key: !secret pushetta_key
+    channel_name: dpressle_hass
+
+  - name: TELEGRAM
+    platform: telegram
+    api_key: !secret telegram_key
+    chat_id: 363307034
+
+# Weather Prediction
+sensor:
+  - platform: darksky
+    api_key: !secret darksky_key
+    units: 'auto'
+    monitored_conditions:
+      - summary
+      - temperature
+      - precip_intensity
+      # - precip_probability
+      - humidity
+      # - icon
+      # - apparent_temperature
+      # - wind_speed
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
