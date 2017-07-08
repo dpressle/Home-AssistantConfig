@@ -1,5 +1,10 @@
 outside_lights:
-    name: Outside Lights
-    entities:
-      - switch.relaybutton_5_0
-      - switch.relaybutton_5_1
+  name: Outside Lights
+  entities:
+    - switch.relaybutton_5_0
+    - switch.relaybutton_5_1
+livingroom_covers:
+  name: Living room covers
+  entities:
+    - cover.cover_3_0
+    - cover.cover_4_0
