@@ -10,7 +10,16 @@ homeassistant:
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Asia/Jerusalem
-
+  
+  customize:
+    cover.cover_3_0:
+      friendly_name: Kitchen
+    cover.cover_4_0:
+      friendly_name: Living Room
+    switch.relaybutton_5_1:
+      friendly_name: West
+    switch.relaybutton_5_0:
+      friendly_name: Pergula
 # Show links to resources in log and frontend
 # introduction:
 
@@ -101,7 +110,7 @@ sensor:
     api_key: !secret darksky_key
     units: 'auto'
     monitored_conditions:
-      - summary
+      # - summary
       - temperature
       - precip_intensity
       # - precip_probability

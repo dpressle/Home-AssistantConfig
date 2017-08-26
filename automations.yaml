@@ -1,64 +1,68 @@
-- alias: Open covers morning
-  trigger:
-    # Prefix the first line of each trigger configuration
-    # with a '-' to enter multiple
-    - platform: sun
-      event: sunrise
-      offset: '0:30:00'
-  condition:
-    # Prefix the first line of each condition configuration
-    # with a '-'' to enter multiple
-    - condition: time
-      weekday:
-        - sun
-        - mon
-        - tue
-        - wed
-        - thu
-    - condition: state
-      entity_id: group.all_devices
-      state: 'home'
-  action:
-    service: cover.set_cover_position
-    data:
-      entity_id: group.livingroom_covers
-      position: 70
-
-- alias: Turn on outside lights at dusk
-  trigger:
-    # Prefix the first line of each trigger configuration
-    # with a '-' to enter multiple
-    platform: sun
-      event: sunset
-      offset: '0:30:00'
-  action:
+# - alias: Open covers morning
+  # trigger:
+  # - platform: sun
+    # event: sunrise
+    # offset: 0:30:00
+  # condition:
+  # - condition: time
+    # weekday:
+    # - sun
+    # - mon
+    # - tue
+    # - wed
+    # - thu
+  # - condition: state
+    # entity_id: group.all_devices
+    # state: home
+  # action:
+    # service: cover.set_cover_position
+    # data:
+      # entity_id: group.all_covers
+      # position: 70
+- action:
+  - data:
+      entity_id: switch.relaybutton_5_0
     service: switch.turn_on
-    entity_id: switch.relaybutton_5_1
-
-- alias: Turn off outside lights at dawn
+  alias: Turn outside lights on at sunset
+  condition: []
+  id: '1503673603735'
   trigger:
-    # Prefix the first line of each trigger configuration
-    # with a '-' to enter multiple
+  - event: sunset
+    offset: 00:00:00
     platform: sun
-      event: sunrise
-      offset: '-0:30:00'
-  action:
+- action:
+  - data:
+      entity_id: switch.relaybutton_5_0
     service: switch.turn_off
-    entity_id: switch.relaybutton_5_1
-
-- alias: Turn off outside lights if its daylight
+  alias: Turn outside lights off at sunrise
+  condition: []
+  id: '1503673697244'
   trigger:
-    # Prefix the first line of each trigger configuration
-    # with a '-' to enter multiple
-    platform: state
-      entity_id: group.outside_lights
-      to: 'on'
+  - event: sunrise
+    offset: 00:00:00
+    platform: sun
+- action:
+  - data:
+      entity_id: group.all_covers
+      position: 70
+    service: cover.set_cover_position
+  alias: Open covers at sunrise
   condition:
-    # Prefix the first line of each condition configuration
-    # with a '-'' to enter multiple
-    condition: state
-      entity_id: sun.sun
-      state: 'above_horizon'
-  action:
-    service: switch.turn_off
-    entity_id: group.outside_lights
+  - condition: state
+    entity_id: group.all_devices
+    state: home
+  - condition: template
+    value_template: '{% if now().weekday() in [0,1,2,3,7] %}
+
+      true
+
+      {%else%}
+
+      false
+
+      {%endif%}'
+  id: '1503754027336'
+  trigger:
+  - event: sunrise
+    offset: +00:30:00
+    platform: sun
